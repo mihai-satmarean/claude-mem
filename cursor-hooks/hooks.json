@@ -27,6 +27,9 @@
     "stop": [
       {
         "command": "./cursor-hooks/session-summary.sh"
+      },
+      {
+        "command": "./cursor-hooks/zengram-bridge.sh"
       }
     ]
   }
