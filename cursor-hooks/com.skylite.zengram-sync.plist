@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Launchd agent: periodic claude-mem → Zengram sync every 20 minutes.
+
+  Install:
+    cp com.skylite.zengram-sync.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.skylite.zengram-sync.plist
+
+  Uninstall:
+    launchctl unload ~/Library/LaunchAgents/com.skylite.zengram-sync.plist
+
+  Logs:
+    tail -f /tmp/zengram-sync.log
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.skylite.zengram-sync</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/mihai/Documents/tech_workspace/shared_tech/ai_workspace/claude-mem/cursor-hooks/zengram-sync.sh</string>
+  </array>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>ZENGRAM_URL</key>
+    <string>http://100.101.239.56:30084</string>
+    <key>ZENGRAM_API_KEY</key>
+    <string>ae4500ecd77fec279593a14d37b95d20dada54a284d20b939fa2d5797b41ea59</string>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+
+  <!-- Run every 20 minutes -->
+  <key>StartInterval</key>
+  <integer>1200</integer>
+
+  <!-- Only run if worker is available; exit silently if not -->
+  <key>StandardOutPath</key>
+  <string>/tmp/zengram-sync.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/zengram-sync.log</string>
+
+  <!-- Don't restart on failure -->
+  <key>KeepAlive</key>
+  <false/>
+
+  <!-- Run only when user is logged in -->
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>
